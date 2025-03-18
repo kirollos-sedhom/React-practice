@@ -85,7 +85,7 @@ function Accordion() {
   }, [token]);
 
   return data ? (
-    <>
+    <div className="accordion_page  h-screen flex flex-col justify-center">
       <div className="choice flex gap-2 justify-center">
         <button
           onClick={() => setSelectionMode("single")}
@@ -118,9 +118,11 @@ function Accordion() {
           />
         );
       })}
-    </>
+    </div>
   ) : (
-    <div>loading ... ples wait</div>
+    <div className="h-screen flex items-center justify-center">
+      loading ... please wait
+    </div>
   );
 
   function handleOpenQuestion(id: number) {
@@ -168,7 +170,7 @@ function AccordionItem(props: {
     }
   }
   return (
-    <div className="container bg-blue-300 my-4 mx-auto p-2 w-3/4 select-none ">
+    <div className="container bg-blue-300 my-2 mx-auto p-2 w-3/4 select-none ">
       <div
         className="question flex items-center justify-between"
         onClick={() => props.handleOpenQuestion(props.id)}
