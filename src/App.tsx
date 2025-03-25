@@ -1,6 +1,7 @@
 import "./App.css";
 import Accordion from "./components/Accordion";
 import ColorGenerator from "./components/ColorGenerator";
+import ImageSlider from "./components/ImageSlider";
 import StarRating from "./components/StarRating";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <>
       {/* <Accordion /> */}
       {/* <ColorGenerator /> */}
-      <StarRating />
+      {/* <StarRating /> */}
+      <ImageSlider />
     </>
   );
 }

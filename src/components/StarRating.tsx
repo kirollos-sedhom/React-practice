@@ -11,7 +11,8 @@ import { FaStar } from "react-icons/fa";
 */
 const StarRating = () => {
   const [selected, setSelected] = React.useState<number>(-1);
-  console.log(selected);
+  const [hovered, setHovered] = React.useState<number>(-1);
+  // console.log(hovered);
   const starsArray = Array(5).fill(0);
 
   function handleStarClick(starId: number) {
@@ -20,24 +21,55 @@ const StarRating = () => {
   return (
     <div className="container flex justify-center p-4">
       {starsArray.map((star, index) => {
-        if (index <= selected) {
-          return (
-            <FaStar
-              key={index}
-              id={index.toString()}
-              className="text-3xl fill-yellow-300"
-              onClick={() => handleStarClick(index)}
-            />
-          );
+        // add hover effect
+        if (hovered > -1) {
+          if (index <= hovered) {
+            return (
+              <FaStar
+                key={index}
+                id={index.toString()}
+                className="text-3xl fill-yellow-300"
+                onClick={() => handleStarClick(index)}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(-1)}
+              />
+            );
+          } else {
+            return (
+              <FaStar
+                key={index}
+                id={index.toString()}
+                className="text-3xl "
+                onClick={() => handleStarClick(index)}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(-1)}
+              />
+            );
+          }
         } else {
-          return (
-            <FaStar
-              key={index}
-              id={index.toString()}
-              className="text-3xl "
-              onClick={() => handleStarClick(index)}
-            />
-          );
+          if (index <= selected) {
+            return (
+              <FaStar
+                key={index}
+                id={index.toString()}
+                className="text-3xl fill-yellow-300"
+                onClick={() => handleStarClick(index)}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(-1)}
+              />
+            );
+          } else {
+            return (
+              <FaStar
+                key={index}
+                id={index.toString()}
+                className="text-3xl "
+                onClick={() => handleStarClick(index)}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(-1)}
+              />
+            );
+          }
         }
       })}
     </div>
