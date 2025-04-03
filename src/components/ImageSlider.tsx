@@ -1,4 +1,7 @@
 import React from "react";
+import { IoMdArrowDroprightCircle } from "react-icons/io";
+import { IoMdArrowDropleftCircle } from "react-icons/io";
+import { FaCircle } from "react-icons/fa";
 
 type CatResponse = {
   height: number;
@@ -11,12 +14,25 @@ const ImageSlider = () => {
   const [currentIndex, setCurrentIndex] = React.useState<number>(0);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
+
+  const bulletsArr = Array(5).fill(0);
   // console.log(data[0]);
   console.log(currentIndex);
   console.log("data length:", data?.length);
   React.useEffect(() => {
     getData();
   }, []);
+
+  React.useEffect(() => {
+    // automatic slide change every 7 seconds
+
+    let timerId: number | undefined = setTimeout(() => {
+      increaseIndex();
+      timerId = undefined;
+    }, 7000);
+
+    return () => clearTimeout(timerId);
+  }, [currentIndex]);
 
   async function getData() {
     setLoading(true);
@@ -37,13 +53,30 @@ const ImageSlider = () => {
     }
   }
   return data ? (
-    <div>
-      <button onClick={decreaseIndex}>prev</button>
-      <img
-        className="w-[500px] h-[500px] object-cover  transition-all  duration-300 ease-in-out"
-        src={data[currentIndex].url}
-      />
-      <button onClick={increaseIndex}>next</button>
+    <div className="flex flex-col justify-center items-center select-none relative">
+      <div className="flex justify-center items-center">
+        <IoMdArrowDropleftCircle
+          onClick={decreaseIndex}
+          className="text-4xl mx-2 cursor-pointer"
+        />
+        <div
+          style={{ backgroundImage: `url(${data[currentIndex].url})` }}
+          className="duration-500 w-[500px] h-[500px] bg-cover bg-center duration-300 ease-in-out"
+        />
+        <IoMdArrowDroprightCircle
+          onClick={increaseIndex}
+          className="text-4xl mx-2 cursor-pointer"
+        />
+      </div>
+      <div className="flex gap-2 absolute bottom-5">
+        {bulletsArr.map((item, index) => {
+          if (index === currentIndex) {
+            return <FaCircle key={index} size={16} className="fill-white" />;
+          } else {
+            return <FaCircle key={index} className="fill-black/50" />;
+          }
+        })}
+      </div>
     </div>
   ) : (
     <div>ImageSlider</div>
