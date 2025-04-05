@@ -23,16 +23,16 @@ const ImageSlider = () => {
     getData();
   }, []);
 
-  React.useEffect(() => {
-    // automatic slide change every 7 seconds
+  // React.useEffect(() => {
+  //   // automatic slide change every 7 seconds
 
-    let timerId: number | undefined = setTimeout(() => {
-      increaseIndex();
-      timerId = undefined;
-    }, 7000);
+  //   let timerId: number | undefined = setTimeout(() => {
+  //     increaseIndex();
+  //     timerId = undefined;
+  //   }, 7000);
 
-    return () => clearTimeout(timerId);
-  }, [currentIndex]);
+  //   return () => clearTimeout(timerId);
+  // }, [currentIndex]);
 
   async function getData() {
     setLoading(true);
@@ -59,10 +59,18 @@ const ImageSlider = () => {
           onClick={decreaseIndex}
           className="text-4xl mx-2 cursor-pointer"
         />
-        <div
-          style={{ backgroundImage: `url(${data[currentIndex].url})` }}
-          className="duration-500 w-[500px] h-[500px] bg-cover bg-center duration-300 ease-in-out"
-        />
+        <div className="viewport overflow-hidden w-[500px]">
+          <div
+            className="track flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {data.map((item, index) => {
+              return (
+                <img src={item.url} alt="a unique cat image" key={index} />
+              );
+            })}
+          </div>
+        </div>
         <IoMdArrowDroprightCircle
           onClick={increaseIndex}
           className="text-4xl mx-2 cursor-pointer"
