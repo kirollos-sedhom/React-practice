@@ -59,7 +59,7 @@ const ImageSlider = () => {
           onClick={decreaseIndex}
           className="text-4xl mx-2 cursor-pointer"
         />
-        <div className="viewport overflow-hidden w-[500px] border-2">
+        <div className="viewport overflow-hidden w-[500px]">
           <div
             className="track flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -67,7 +67,7 @@ const ImageSlider = () => {
             {data.map((item, index) => {
               return (
                 <img
-                  className="w-[500px] h-[500px] object-cover flex-shrink-0 border-2"
+                  className="w-[500px] h-[500px] object-cover flex-shrink-0"
                   src={item.url}
                   alt="a unique cat image"
                   key={item.id}
