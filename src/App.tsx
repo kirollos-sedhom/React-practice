@@ -4,6 +4,7 @@ import ColorGenerator from "./components/ColorGenerator";
 import ImageSlider from "./components/ImageSlider";
 import Products from "./components/Products";
 import StarRating from "./components/StarRating";
+import TreeView from "./components/TreeView";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       {/* <ColorGenerator /> */}
       {/* <StarRating /> */}
       {/* <ImageSlider /> */}
-      <Products />
+      {/* <Products /> */}
+      <TreeView />
     </>
   );
 }
