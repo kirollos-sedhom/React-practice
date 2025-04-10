@@ -1,6 +1,5 @@
 import React from "react";
 import { FaChevronRight } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
 
 const TreeView = () => {
   /*
