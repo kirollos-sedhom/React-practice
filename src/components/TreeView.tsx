@@ -1,4 +1,6 @@
 import React from "react";
+import { FaChevronRight } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 
 const TreeView = () => {
   /*
@@ -15,10 +17,21 @@ const TreeView = () => {
                 data
     */
   return (
-    <div>
+    <div className="w-1/4 h-screen bg-blue-500 text-white text-xl p-2">
       <TreeItem text="profile">
-        <TreeItem text="location">
-          <p>city</p>
+        <TreeItem text="details">
+          <TreeItem text="location">
+            <TreeItem text="city" />
+          </TreeItem>
+        </TreeItem>
+      </TreeItem>
+      <TreeItem text="settings">
+        <TreeItem text="account" />
+        <TreeItem text="security">
+          <TreeItem text="login" />
+          <TreeItem text="register">
+            <TreeItem text="data" />
+          </TreeItem>
         </TreeItem>
       </TreeItem>
     </div>
@@ -28,11 +41,25 @@ const TreeView = () => {
 export default TreeView;
 
 function TreeItem(props: { text: string; children?: React.ReactNode }) {
-  const [viewChildren, setViewChildren] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <div className="select-none">
-      <p onClick={() => setViewChildren((prev) => !prev)}>{props.text}</p>
-      {viewChildren && <p className="ml-4">{props.children}</p>}
+      <p
+        className="flex items-center"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+      >
+        {props.text}{" "}
+        {props.children && (
+          <FaChevronRight
+            className={`mx-1 ${
+              isOpen && "rotate-90"
+            }  transition duration-300 ease-in-out`}
+            size={15}
+          />
+        )}
+      </p>
+      {isOpen && <p className="ml-4">{props.children}</p>}
     </div>
   );
 }
