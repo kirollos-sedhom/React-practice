@@ -5,6 +5,7 @@ import ImageSlider from "./components/ImageSlider";
 import Products from "./components/Products";
 import StarRating from "./components/StarRating";
 import TreeView from "./components/TreeView";
+import QRGenerator from "./components/QRGenerator";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       {/* <StarRating /> */}
       {/* <ImageSlider /> */}
       {/* <Products /> */}
-      <TreeView />
+      {/* <TreeView /> */}
+      <QRGenerator />
     </>
   );
 }
