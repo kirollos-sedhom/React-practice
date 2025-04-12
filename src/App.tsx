@@ -6,6 +6,7 @@ import Products from "./components/Products";
 import StarRating from "./components/StarRating";
 import TreeView from "./components/TreeView";
 import QRGenerator from "./components/QRGenerator";
+import DarkMode from "./components/DarkMode";
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
       {/* <ImageSlider /> */}
       {/* <Products /> */}
       {/* <TreeView /> */}
-      <QRGenerator />
+      {/* <QRGenerator /> */}
+      <DarkMode />
+      {/* <p>hi</p> */}
     </>
   );
 }
