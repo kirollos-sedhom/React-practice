@@ -1,5 +1,5 @@
 import React from "react";
-
+import useToggleTheme from "../hooks/useToggleTheme";
 /*
 hints from instructor:
 you will need custom hook
@@ -14,38 +14,20 @@ problem: not sure why i would need custom hook
 */
 
 const DarkMode = () => {
-  const [theme, setTheme] = React.useState<string | null>(
-    localStorage.getItem("theme")
-  );
-  localStorage.setItem("theme", "light");
-  function toggleTheme() {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-    localStorage.setItem("theme", theme ? theme : "light");
-  }
+  console.log(localStorage.getItem("dark-mode"));
+  const [darkMode, toggle] = useToggleTheme();
   return (
     <div
-      className={`h-screen w-full p-4 ${
-        theme === "light" ? "bg-white" : "bg-black"
-      }`}
+      className={`h-screen w-full p-4 ${darkMode ? "bg-black" : "bg-white"}`}
     >
-      <p
-        className={`${
-          theme === "light" ? "text-black" : "text-white"
-        } text-3xl mb-4`}
-      >
+      <p className={`${darkMode ? "text-white" : "text-black"} text-3xl mb-4`}>
         Hello world
       </p>
       <button
-        className={`${
-          theme === "light"
-            ? "text-black bg-black/20"
-            : "text-white bg-white/20"
-        } px-2 py-1 rounded-md`}
-        onClick={toggleTheme}
+        className={`  ${
+          darkMode ? "text-white bg-white/20" : "text-black bg-black/20"
+        } px-2 py-1 rounded-md cursor-pointer hover:bg-zinc-500/50 `}
+        onClick={() => toggle}
       >
         change theme
       </button>
