@@ -1,29 +1,45 @@
 import React, {useState, useEffect} from 'react'
 
-const useToggleTheme = () => {
+type hookType = [
+    darkMode : "on" | "off",
+    toggle: ()=> void
+]
+  
+const useToggleTheme = ():hookType => {
     
     
-    const [darkMode,setDarkMode] = useState(false)
+    const [darkMode,setDarkMode] = useState<"on" | "off">("on")
     useEffect(()=>{
-        if(localStorage.getItem("dark_mode")){
+        let PreviousStorage = localStorage.getItem("dark_mode")
+        if(PreviousStorage === "on" || PreviousStorage === "off"){
             // setDarkMode(localStorage.getItem("dark-mode"))
             
-            console.log("found ",localStorage.getItem("theme"))
+            setDarkMode(PreviousStorage)
 
         }
         else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             // dark mode
-            setDarkMode(true)
+            setDarkMode("on")
         }
         else{
-            setDarkMode(false)
+            setDarkMode("off")
         }
         
     },[])
 
     function toggle(){
-        setDarkMode(prev => !prev)
-    }
+        
+        if(darkMode === "on"){
+            setDarkMode("off")
+            localStorage.setItem("dark_mode", "off")
+        }
+        else{
+            setDarkMode("on")
+            localStorage.setItem("dark_mode", "on")
+        }
+        
+        
+    } 
 
 
   return [darkMode, toggle]
