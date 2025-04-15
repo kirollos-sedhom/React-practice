@@ -7,6 +7,7 @@ import StarRating from "./components/StarRating";
 import TreeView from "./components/TreeView";
 import QRGenerator from "./components/QRGenerator";
 import DarkMode from "./components/DarkMode";
+import Tabs from "./components/Tabs";
 import ProgressIndicator from "./components/ProgressIndicator";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       {/* <QRGenerator /> */}
       {/* <DarkMode /> */}
       <ProgressIndicator />
+      <Tabs />
     </>
   );
 }

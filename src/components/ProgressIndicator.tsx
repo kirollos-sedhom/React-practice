@@ -65,9 +65,9 @@ const ProgressIndicator = () => {
         style={{ width: `${scrollLevel}%`, backgroundColor: `${barColor}` }}
         className={`h-4 fixed top-0 left-0 transition-all duration-100`}
       ></div>
-      {data.map((item) => {
+      {/* {data.map((item) => {
         return <p key={item.id}>{item.title}</p>;
-      })}
+      })} */}
     </div>
   ) : (
     <h1>loading</h1>
