@@ -14,6 +14,7 @@ const ProgressIndicator = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [scrollLevel, setScrollLevel] = useState(0);
+  const [barColor, setBarColor] = useState("green");
 
   useEffect(() => {
     getData();
@@ -29,6 +30,13 @@ const ProgressIndicator = () => {
       document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = (window.scrollY / maxScroll) * 100;
     setScrollLevel(scrollPercent);
+    if (scrollPercent <= 50) {
+      const red = Math.round((scrollPercent / 50) * 255); // 0 → 255
+      setBarColor(`rgb(${red}, 255, 0)`);
+    } else {
+      const green = Math.round(255 - ((scrollPercent - 50) / 50) * 255); // 255 → 0
+      setBarColor(`rgb(255, ${green}, 0)`);
+    }
   }
   async function getData() {
     setLoading(true);
@@ -50,11 +58,12 @@ const ProgressIndicator = () => {
       setLoading(false);
     }
   }
+
   return data ? (
     <div className="width-cover flex flex-col items-center gap-3 relative">
       <div
-        style={{ width: `${scrollLevel}%` }}
-        className={`bg-blue-300 h-4 fixed top-0 left-0 transition-all duration-100`}
+        style={{ width: `${scrollLevel}%`, backgroundColor: `${barColor}` }}
+        className={`h-4 fixed top-0 left-0 transition-all duration-100`}
       ></div>
       {data.map((item) => {
         return <p key={item.id}>{item.title}</p>;
