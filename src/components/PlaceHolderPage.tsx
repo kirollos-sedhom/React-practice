@@ -2,14 +2,7 @@ import React from "react";
 import Modal from "./Modal";
 const PlaceHolderPage = () => {
   const [showModal, setShowModal] = React.useState(false);
-  const modalRef = React.useRef<HTMLDivElement | null>(null);
-  React.useEffect(() => {
-    window.addEventListener("keydown", trapFocus);
 
-    return () => {
-      window.removeEventListener("keydown", trapFocus);
-    };
-  }, []);
   return (
     <div>
       <div className="w-full flex justify-center">
@@ -19,9 +12,19 @@ const PlaceHolderPage = () => {
         >
           show modal
         </button>
+        <input type="text" className="bg-white" placeholder="something here" />
+        <input
+          type="text"
+          className="bg-white"
+          placeholder="something here 2"
+        />
+        <input
+          type="text"
+          className="bg-white"
+          placeholder="something here 3"
+        />
       </div>
       <Modal
-        modalRef={modalRef}
         showModal={showModal}
         setShowModal={setShowModal}
         header="this is a header"
@@ -30,18 +33,6 @@ const PlaceHolderPage = () => {
       />
     </div>
   );
-
-  function trapFocus(e: KeyboardEvent) {
-    const isTabPressed = e.key === "Tab";
-    if (!isTabPressed) {
-      return;
-    }
-    const modal = modalRef.current;
-    const possibleFocusableElements = `button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])`;
-    const focusableContent = modal?.querySelectorAll(possibleFocusableElements);
-    console.log(focusableContent ? [0] : "found none");
-    console.log(focusableContent ? [-1] : "found none");
-  }
 };
 
 export default PlaceHolderPage;

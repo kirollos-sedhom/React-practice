@@ -2,7 +2,6 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 
 type ModalPropsType = {
-  modalRef: React.RefObject<HTMLDivElement>;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   header: string;
@@ -10,20 +9,48 @@ type ModalPropsType = {
   footer: string;
 };
 const Modal = ({
-  modalRef,
   showModal,
   setShowModal,
   header,
   body,
   footer,
 }: ModalPropsType) => {
-  React.useEffect(() => {
-    window.addEventListener("keydown", handleEscapeCloseModal);
+  const modalRef = React.useRef<HTMLDivElement | null>(null);
 
-    return () => {
-      window.removeEventListener("keydown", handleEscapeCloseModal);
-    };
-  }, []);
+  React.useEffect(() => {
+    if (showModal) {
+      const modalElement = modalRef.current;
+      const focusableElements = modalElement?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+
+      const firstElement = focusableElements[0];
+      firstElement.focus();
+      firstElement.blur();
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const handleTabKeyPress = (event) => {
+        if (event.key === "Tab") {
+          if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+          } else if (
+            !event.shiftKey &&
+            document.activeElement === lastElement
+          ) {
+            event.preventDefault();
+            firstElement.focus();
+          }
+        }
+      };
+      window.addEventListener("keydown", handleEscapeCloseModal);
+
+      modalElement.addEventListener("keydown", handleTabKeyPress);
+      return () => {
+        modalElement.removeEventListener("keydown", handleTabKeyPress);
+        window.removeEventListener("keydown", handleEscapeCloseModal);
+      };
+    }
+  }, [showModal]);
   return (
     showModal && (
       <div
@@ -32,6 +59,7 @@ const Modal = ({
       >
         <div
           ref={modalRef}
+          aria-modal={true}
           onClick={(e) => handleModalClick(e)}
           className="bg-red-300 w-1/2 h-1/2 flex flex-col items-center justify-between"
         >
@@ -44,6 +72,16 @@ const Modal = ({
           </div>
 
           <p className="w-full p-4 text-center">{body}</p>
+          <input
+            type="text"
+            className="bg-white"
+            placeholder="something here"
+          />
+          <input
+            type="text"
+            className="bg-white"
+            placeholder="something here 2"
+          />
           <p className="bg-yellow-300 w-full p-4 text-center">{footer}</p>
         </div>
       </div>
