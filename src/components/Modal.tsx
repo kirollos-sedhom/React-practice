@@ -2,6 +2,7 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 
 type ModalPropsType = {
+  modalButtonRef: React.RefObject<HTMLButtonElement>;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   header: string;
@@ -9,6 +10,7 @@ type ModalPropsType = {
   footer: string;
 };
 const Modal = ({
+  modalButtonRef,
   showModal,
   setShowModal,
   header,
@@ -20,35 +22,51 @@ const Modal = ({
   React.useEffect(() => {
     if (showModal) {
       const modalElement = modalRef.current;
-      const focusableElements = modalElement?.querySelectorAll(
+      const focusableElements = modalElement?.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
 
-      const firstElement = focusableElements[0];
-      firstElement.focus();
-      firstElement.blur();
-      const lastElement = focusableElements[focusableElements.length - 1];
-      const handleTabKeyPress = (event) => {
-        if (event.key === "Tab") {
-          if (event.shiftKey && document.activeElement === firstElement) {
-            event.preventDefault();
-            lastElement.focus();
-          } else if (
-            !event.shiftKey &&
-            document.activeElement === lastElement
-          ) {
-            event.preventDefault();
-            firstElement.focus();
+      if (focusableElements && focusableElements.length > 0) {
+        const firstElement = focusableElements[0];
+        // Force modal focus context to activate focus trap (without keeping focus on any element)
+        firstElement.focus();
+        firstElement.blur();
+        const lastElement = focusableElements[focusableElements.length - 1];
+        const handleTabKeyPress = (event: KeyboardEvent) => {
+          if (event.key === "Tab") {
+            if (event.shiftKey && document.activeElement === firstElement) {
+              event.preventDefault();
+              lastElement.focus();
+            } else if (
+              !event.shiftKey &&
+              document.activeElement === lastElement
+            ) {
+              event.preventDefault();
+              firstElement.focus();
+            }
           }
-        }
-      };
-      window.addEventListener("keydown", handleEscapeCloseModal);
+        };
+        window.addEventListener("keydown", handleEscapeCloseModal);
 
-      modalElement.addEventListener("keydown", handleTabKeyPress);
-      return () => {
-        modalElement.removeEventListener("keydown", handleTabKeyPress);
-        window.removeEventListener("keydown", handleEscapeCloseModal);
-      };
+        if (modalElement)
+          modalElement.addEventListener("keydown", handleTabKeyPress);
+
+        // preventing scroll behavior
+        document.body.style.overflow = "hidden";
+        return () => {
+          if (modalElement)
+            modalElement.removeEventListener("keydown", handleTabKeyPress);
+          window.removeEventListener("keydown", handleEscapeCloseModal);
+
+          // making the modal button focused again
+          if (modalButtonRef.current) {
+            modalButtonRef.current.focus();
+          }
+
+          // enable scrolling again
+          document.body.style.overflow = "";
+        };
+      }
     }
   }, [showModal]);
   return (
@@ -58,6 +76,7 @@ const Modal = ({
         className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex items-center justify-center"
       >
         <div
+          role="dialog"
           ref={modalRef}
           aria-modal={true}
           onClick={(e) => handleModalClick(e)}

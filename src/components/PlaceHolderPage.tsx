@@ -2,11 +2,13 @@ import React from "react";
 import Modal from "./Modal";
 const PlaceHolderPage = () => {
   const [showModal, setShowModal] = React.useState(false);
+  const modalButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   return (
     <div>
       <div className="w-full flex justify-center">
         <button
+          ref={modalButtonRef}
           onClick={() => setShowModal((prev) => !prev)}
           className="px-2 py-1 rounded-md bg-blue-300"
         >
@@ -25,6 +27,7 @@ const PlaceHolderPage = () => {
         />
       </div>
       <Modal
+        modalButtonRef={modalButtonRef}
         showModal={showModal}
         setShowModal={setShowModal}
         header="this is a header"
