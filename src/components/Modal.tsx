@@ -18,57 +18,66 @@ const Modal = ({
   footer,
 }: ModalPropsType) => {
   const modalRef = React.useRef<HTMLDivElement | null>(null);
-
+  // effect to handle escape and scroll lock functionality
   React.useEffect(() => {
-    if (showModal) {
-      const modalElement = modalRef.current;
-      const focusableElements = modalElement?.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-
-      if (focusableElements && focusableElements.length > 0) {
-        const firstElement = focusableElements[0];
-        // Force modal focus context to activate focus trap (without keeping focus on any element)
-        firstElement.focus();
-        firstElement.blur();
-        const lastElement = focusableElements[focusableElements.length - 1];
-        const handleTabKeyPress = (event: KeyboardEvent) => {
-          if (event.key === "Tab") {
-            if (event.shiftKey && document.activeElement === firstElement) {
-              event.preventDefault();
-              lastElement.focus();
-            } else if (
-              !event.shiftKey &&
-              document.activeElement === lastElement
-            ) {
-              event.preventDefault();
-              firstElement.focus();
-            }
-          }
-        };
-        window.addEventListener("keydown", handleEscapeCloseModal);
-
-        if (modalElement)
-          modalElement.addEventListener("keydown", handleTabKeyPress);
-
-        // preventing scroll behavior
-        document.body.style.overflow = "hidden";
-        return () => {
-          if (modalElement)
-            modalElement.removeEventListener("keydown", handleTabKeyPress);
-          window.removeEventListener("keydown", handleEscapeCloseModal);
-
-          // making the modal button focused again
-          if (modalButtonRef.current) {
-            modalButtonRef.current.focus();
-          }
-
-          // enable scrolling again
-          document.body.style.overflow = "";
-        };
-      }
+    if (!showModal) {
+      return;
     }
+
+    window.addEventListener("keydown", handleEscapeCloseModal);
+
+    // preventing scroll behavior
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleEscapeCloseModal);
+
+      // enable scrolling again
+      document.body.style.overflow = "";
+    };
   }, [showModal]);
+
+  // effect to handle trap focus in modal
+  React.useEffect(() => {
+    if (!showModal) {
+      return;
+    }
+    const modalElement = modalRef.current;
+    const focusableElements = modalElement?.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+
+    if (!focusableElements || focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    // Force modal focus context to activate focus trap (without keeping focus on any element)
+    firstElement.focus();
+    firstElement.blur();
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const handleTabKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Tab") {
+        if (event.shiftKey && document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    modalElement?.addEventListener("keydown", handleTabKeyPress);
+
+    return () => {
+      modalElement?.removeEventListener("keydown", handleTabKeyPress);
+
+      // making the modal button focused again
+      if (modalButtonRef.current) {
+        modalButtonRef.current.focus();
+      }
+    };
+  }, [showModal]);
+
   return (
     showModal && (
       <div
