@@ -12,7 +12,7 @@ import Tabs from "./components/Tabs";
 import ProgressIndicator from "./components/ProgressIndicator";
 import Modal from "./components/Modal";
 import PlaceHolderPage from "./components/PlaceHolderPage"; // contains the modal
-
+import BasicsOfMotion from "./components/FramerMotionTutorial/BasicsOfMotion";
 function App() {
   return (
     <>
@@ -24,9 +24,10 @@ function App() {
       {/* <TreeView /> */}
       {/* <QRGenerator /> */}
       {/* <DarkMode /> */}
-      <ProgressIndicator />
+      {/* <ProgressIndicator /> */}
       {/* <Tabs /> */}
-      <PlaceHolderPage />
+      {/* <PlaceHolderPage /> */}
+      <BasicsOfMotion />
     </>
   );
 }
