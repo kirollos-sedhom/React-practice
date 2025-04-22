@@ -12,7 +12,8 @@ import Tabs from "./components/Tabs";
 import ProgressIndicator from "./components/ProgressIndicator";
 import Modal from "./components/Modal";
 import PlaceHolderPage from "./components/PlaceHolderPage"; // contains the modal
-import BasicsOfMotion from "./components/FramerMotionTutorial/BasicsOfMotion";
+import FramerMotion from "./components/FramerMotionTutorial/FramerMotion";
+
 function App() {
   return (
     <>
@@ -27,7 +28,7 @@ function App() {
       {/* <ProgressIndicator /> */}
       {/* <Tabs /> */}
       {/* <PlaceHolderPage /> */}
-      <BasicsOfMotion />
+      <FramerMotion />
     </>
   );
 }
