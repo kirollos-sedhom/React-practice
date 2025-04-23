@@ -1,6 +1,8 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 const ViewBasedAnimations = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true }); // receives the ref and some properties
   return (
     <>
       <div className="h-[150vh] bg-blue-300"></div>
@@ -14,6 +16,12 @@ const ViewBasedAnimations = () => {
           duration: 2,
         }}
       ></motion.div>
+
+      <div
+        style={{ backgroundColor: isInView ? "red" : "blue" }}
+        className="h-[100vh] transition-[background] duration-1000"
+        ref={ref}
+      />
     </>
   );
 };
