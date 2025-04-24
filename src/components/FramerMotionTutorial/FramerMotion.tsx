@@ -3,6 +3,7 @@ import BasicsOfMotion from "./BasicsOfMotion";
 import Gestures from "./Gestures";
 import AnimationControls from "./AnimationControls";
 import ViewBasedAnimations from "./ViewBasedAnimations";
+import ScrollBasedAnimation from "./ScrollBasedAnimation";
 
 const FramerMotion = () => {
   return (
@@ -10,7 +11,8 @@ const FramerMotion = () => {
       {/* <BasicsOfMotion /> */}
       {/* <Gestures /> */}
       {/* <AnimationControls /> */}
-      <ViewBasedAnimations />
+      {/* <ViewBasedAnimations /> */}
+      <ScrollBasedAnimation />
     </div>
   );
 };
