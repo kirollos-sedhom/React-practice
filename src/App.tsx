@@ -27,8 +27,8 @@ function App() {
       {/* <DarkMode /> */}
       {/* <ProgressIndicator /> */}
       {/* <Tabs /> */}
-      {/* <PlaceHolderPage /> */}
-      <FramerMotion />
+      <PlaceHolderPage />
+      {/* <FramerMotion /> */}
     </>
   );
 }

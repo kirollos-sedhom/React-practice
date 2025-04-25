@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "./Modal";
+import { AnimatePresence } from "framer-motion";
 const PlaceHolderPage = () => {
   const [showModal, setShowModal] = React.useState(false);
   const modalButtonRef = React.useRef<HTMLButtonElement | null>(null);
@@ -26,14 +27,18 @@ const PlaceHolderPage = () => {
           placeholder="something here 3"
         />
       </div>
-      <Modal
-        modalButtonRef={modalButtonRef}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        header="this is a header"
-        body="this is the body"
-        footer="this is the footer"
-      />
+      <AnimatePresence>
+        {showModal && (
+          <Modal
+            modalButtonRef={modalButtonRef}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            header="this is a header"
+            body="this is the body"
+            footer="this is the footer"
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

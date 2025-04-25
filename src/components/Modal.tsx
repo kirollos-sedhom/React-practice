@@ -1,3 +1,4 @@
+import { AnimationControls, motion, useAnimationControls } from "framer-motion";
 import React from "react";
 import { IoClose } from "react-icons/io5";
 
@@ -18,6 +19,7 @@ const Modal = ({
   footer,
 }: ModalPropsType) => {
   const modalRef = React.useRef<HTMLDivElement | null>(null);
+
   // effect to handle escape and scroll lock functionality
   React.useEffect(() => {
     if (!showModal) {
@@ -42,6 +44,7 @@ const Modal = ({
     if (!showModal) {
       return;
     }
+
     const modalElement = modalRef.current;
     const focusableElements = modalElement?.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -70,7 +73,6 @@ const Modal = ({
 
     return () => {
       modalElement?.removeEventListener("keydown", handleTabKeyPress);
-
       // making the modal button focused again
       if (modalButtonRef.current) {
         modalButtonRef.current.focus();
@@ -78,42 +80,44 @@ const Modal = ({
     };
   }, [showModal]);
 
-  return (
-    showModal && (
-      <div
-        onClick={handleCloseModal}
-        className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex items-center justify-center"
-      >
-        <div
-          role="dialog"
-          ref={modalRef}
-          aria-modal={true}
-          onClick={(e) => handleModalClick(e)}
-          className="bg-red-300 w-1/2 h-1/2 flex flex-col items-center justify-between"
-        >
-          <div className="header bg-green-300 flex w-full items-center relative">
-            <p className="w-full p-4 text-center">{header}</p>
-            <IoClose
-              className="absolute right-10 cursor-pointer"
-              onClick={handleCloseModal}
-            />
-          </div>
+  if (!showModal) return null;
 
-          <p className="w-full p-4 text-center">{body}</p>
-          <input
-            type="text"
-            className="bg-white"
-            placeholder="something here"
+  return (
+    <motion.div
+      onClick={handleCloseModal}
+      className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        initial={{ translateY: "-200%" }}
+        animate={{ translateY: "0" }}
+        exit={{ translateY: "200%" }}
+        role="dialog"
+        ref={modalRef}
+        aria-modal={true}
+        onClick={(e) => handleModalClick(e)}
+        className="bg-red-300 w-1/2 h-1/2 flex flex-col items-center justify-between"
+      >
+        <div className="header bg-green-300 flex w-full items-center relative">
+          <p className="w-full p-4 text-center">{header}</p>
+          <IoClose
+            className="absolute right-10 cursor-pointer"
+            onClick={handleCloseModal}
           />
-          <input
-            type="text"
-            className="bg-white"
-            placeholder="something here 2"
-          />
-          <p className="bg-yellow-300 w-full p-4 text-center">{footer}</p>
         </div>
-      </div>
-    )
+
+        <p className="w-full p-4 text-center">{body}</p>
+        <input type="text" className="bg-white" placeholder="something here" />
+        <input
+          type="text"
+          className="bg-white"
+          placeholder="something here 2"
+        />
+        <p className="bg-yellow-300 w-full p-4 text-center">{footer}</p>
+      </motion.div>
+    </motion.div>
   );
 
   function handleModalClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
