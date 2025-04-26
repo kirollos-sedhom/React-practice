@@ -13,22 +13,23 @@ import ProgressIndicator from "./components/ProgressIndicator";
 import Modal from "./components/Modal";
 import PlaceHolderPage from "./components/PlaceHolderPage"; // contains the modal
 import FramerMotion from "./components/FramerMotionTutorial/FramerMotion";
+import GithubProfileFinder from "./components/GithubProfileFinder";
 
 function App() {
   return (
     <>
-      {/* <Accordion /> */}
-      {/* <ColorGenerator /> */}
-      {/* <StarRating /> */}
-      {/* <ImageSlider /> */}
-      {/* <Products /> */}
-      {/* <TreeView /> */}
-      {/* <QRGenerator /> */}
-      {/* <DarkMode /> */}
-      {/* <ProgressIndicator /> */}
-      {/* <Tabs /> */}
-      <PlaceHolderPage />
-      {/* <FramerMotion /> */}
+      {/* <Accordion />
+      <ColorGenerator />
+      <StarRating />
+      <ImageSlider />
+      <Products />
+      <TreeView />
+      <QRGenerator />
+      <DarkMode />
+      <ProgressIndicator />
+      <Tabs />
+      <PlaceHolderPage /> */}
+      <GithubProfileFinder />
     </>
   );
 }

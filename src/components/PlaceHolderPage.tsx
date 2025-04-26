@@ -16,16 +16,6 @@ const PlaceHolderPage = () => {
           show modal
         </button>
         <input type="text" className="bg-white" placeholder="something here" />
-        <input
-          type="text"
-          className="bg-white"
-          placeholder="something here 2"
-        />
-        <input
-          type="text"
-          className="bg-white"
-          placeholder="something here 3"
-        />
       </div>
       <AnimatePresence>
         {showModal && (

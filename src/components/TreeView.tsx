@@ -16,7 +16,7 @@ const TreeView = () => {
                 data
     */
   return (
-    <div className="w-1/4 h-screen bg-blue-500 text-white text-xl p-2">
+    <div className="w-max h-screen bg-blue-500 text-white text-xl p-2">
       <TreeItem text="profile">
         <TreeItem text="details">
           <TreeItem text="location">

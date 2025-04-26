@@ -53,13 +53,13 @@ const ImageSlider = () => {
     }
   }
   return data ? (
-    <div className="flex flex-col justify-center items-center select-none relative">
+    <div className="flex flex-col justify-center items-center select-none relative w-full">
       <div className="flex justify-center items-center">
         <IoMdArrowDropleftCircle
           onClick={decreaseIndex}
           className="text-4xl mx-2 cursor-pointer"
         />
-        <div className="viewport overflow-hidden w-[500px]">
+        <div className="viewport overflow-hidden md:w-[500px] w-[200px]">
           <div
             className="track flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
