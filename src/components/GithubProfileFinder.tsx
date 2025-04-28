@@ -1,5 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import { CiLink } from "react-icons/ci";
 
+import React, { useEffect, useRef, useState } from "react";
+type GithubProfile = {
+  avatar_url: string;
+  location: string;
+  name: string;
+  public_repos: number;
+  join_date: string;
+  followers: number;
+  following: number;
+  html_url: string;
+};
 /*
 you should use github public api to fetch user details
 get name , profile link , join date, public repos, followers, following
@@ -10,7 +21,7 @@ get name , profile link , join date, public repos, followers, following
 const GithubProfileFinder = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<GithubProfile | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -33,6 +44,38 @@ const GithubProfileFinder = () => {
         >
           search
         </button>
+      </div>
+
+      <div>
+        {data ? (
+          <div className="profile my-4 flex flex-col items-center gap-2">
+            <img
+              className="rounded-full w-38"
+              src={data.avatar_url}
+              alt={`image of ${data.name}`}
+            />
+            <p className="flex items-center gap-2 text-xl font-medium">
+              <a href={data.html_url}>{data.name}</a>
+            </p>
+
+            <div className="info flex gap-4">
+              <div className="repos flex flex-col items-center">
+                <p className="font-bold">Repos</p>
+                <p>{data.public_repos}</p>
+              </div>
+
+              <div className="followers flex flex-col items-center">
+                <p className="font-bold">Followers</p>
+                <p>{data.followers}</p>
+              </div>
+
+              <div className="following flex flex-col items-center">
+                <p className="font-bold">Following</p>
+                <p>{data.following}</p>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
