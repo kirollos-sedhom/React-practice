@@ -3,6 +3,7 @@ import { CiLink } from "react-icons/ci";
 import React, { useEffect, useRef, useState } from "react";
 type GithubProfile = {
   avatar_url: string;
+  login: string;
   location: string;
   name: string;
   public_repos: number;
@@ -10,6 +11,12 @@ type GithubProfile = {
   followers: number;
   following: number;
   html_url: string;
+};
+
+type usersSearchResponse = {
+  total_count: number;
+  incomplete_results: boolean;
+  items: GithubProfile[];
 };
 /*
 you should use github public api to fetch user details
@@ -20,19 +27,40 @@ get name , profile link , join date, public repos, followers, following
 
 const GithubProfileFinder = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-
+  const [inputContent, setInputContent] = useState<string>("");
   const [data, setData] = useState<GithubProfile | null>(null);
+  const [suggestedUsers, setSuggestedUsers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     console.log(data);
   }, [data]);
+
+  useEffect(() => {
+    console.log(suggestedUsers);
+  }, [suggestedUsers]);
+
+  // text reccomendation effect
+  useEffect(() => {
+    if (!inputContent) {
+      return;
+    }
+
+    const delay = setTimeout(() => {
+      findUsersWithText(inputContent).then((response: usersSearchResponse) =>
+        FillSuggestedUsersWithNamesOnly(response.items)
+      );
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [inputContent]);
   return (
     <div className="flex flex-col items-center">
       <div className="search_menu flex gap-4 mt-4">
         <input
           ref={inputRef}
+          onChange={(e) => setInputContent(e.target.value)}
           className="border-2 border-black/30 rounded-sm px-2 "
           type="text"
           placeholder="find a person"
@@ -89,6 +117,22 @@ const GithubProfileFinder = () => {
       console.log("please write something");
     }
   }
+  async function findUsersWithText(text: string) {
+    const url = `https://api.github.com/search/users?q=${text}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`response status ${response.status}`);
+      }
+
+      const json = await response.json();
+      return json;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  }
 
   async function getData(userName: string) {
     setIsLoading(true);
@@ -109,6 +153,12 @@ const GithubProfileFinder = () => {
         console.log(error.message);
       }
     }
+  }
+
+  function FillSuggestedUsersWithNamesOnly(users: GithubProfile[]) {
+    const newSuggestedUsers: string[] = [];
+    users.map((user) => newSuggestedUsers.push(user.login));
+    setSuggestedUsers(newSuggestedUsers);
   }
 };
 
