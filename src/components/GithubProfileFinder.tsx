@@ -1,6 +1,7 @@
 import { CiLink } from "react-icons/ci";
 
 import React, { useEffect, useRef, useState } from "react";
+import { p } from "framer-motion/client";
 type GithubProfile = {
   avatar_url: string;
   login: string;
@@ -58,17 +59,37 @@ const GithubProfileFinder = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="search_menu flex gap-4 mt-4">
-        <input
-          ref={inputRef}
-          onChange={(e) => setInputContent(e.target.value)}
-          className="border-2 border-black/30 rounded-sm px-2 "
-          type="text"
-          placeholder="find a person"
-        />
+        <div className="search_and_suggestion">
+          <input
+            ref={inputRef}
+            onChange={(e) => setInputContent(e.target.value)}
+            className="border-2 border-black/30 rounded-sm px-2 "
+            type="text"
+            value={inputContent}
+            placeholder="find a person"
+          />
+
+          <div className="dropdown-list  shadow-xl p-2 rounded-md">
+            {suggestedUsers.map((user, index) => {
+              if (index > 8) {
+                return null;
+              } else {
+                return (
+                  <p
+                    className="hover:bg-slate-200"
+                    onClick={() => setInputContent(user)}
+                  >
+                    {user}
+                  </p>
+                );
+              }
+            })}
+          </div>
+        </div>
 
         <button
           onClick={handleSearch}
-          className="bg-blue-300 px-3 py-1 rounded-md"
+          className="bg-blue-300 px-3 py-1 rounded-md self-start"
         >
           search
         </button>
