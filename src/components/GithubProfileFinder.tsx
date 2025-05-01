@@ -1,7 +1,5 @@
-import { CiLink } from "react-icons/ci";
-
 import React, { useEffect, useRef, useState } from "react";
-import { p } from "framer-motion/client";
+
 type GithubProfile = {
   avatar_url: string;
   login: string;
@@ -33,6 +31,7 @@ const GithubProfileFinder = () => {
   const [suggestedUsers, setSuggestedUsers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [viewSuggestions, setViewSuggestions] = useState(false);
 
   useEffect(() => {
     console.log(data);
@@ -45,6 +44,7 @@ const GithubProfileFinder = () => {
   // text reccomendation effect
   useEffect(() => {
     if (!inputContent) {
+      setViewSuggestions(false);
       return;
     }
 
@@ -62,29 +62,34 @@ const GithubProfileFinder = () => {
         <div className="search_and_suggestion">
           <input
             ref={inputRef}
-            onChange={(e) => setInputContent(e.target.value)}
+            onChange={(e) => handleChangeInputContent(e.target.value)}
             className="border-2 border-black/30 rounded-sm px-2 "
             type="text"
             value={inputContent}
             placeholder="find a person"
+            onFocus={handleFocusInput}
+            onBlur={() => setViewSuggestions(false)}
           />
 
-          <div className="dropdown-list  shadow-xl p-2 rounded-md">
-            {suggestedUsers.map((user, index) => {
-              if (index > 8) {
-                return null;
-              } else {
-                return (
-                  <p
-                    className="hover:bg-slate-200"
-                    onClick={() => setInputContent(user)}
-                  >
-                    {user}
-                  </p>
-                );
-              }
-            })}
-          </div>
+          {suggestedUsers.length > 0 && viewSuggestions && (
+            <div className="dropdown-list  shadow-xl p-2 rounded-md">
+              {suggestedUsers.map((user, index) => {
+                if (index > 8) {
+                  return null;
+                } else {
+                  return (
+                    <p
+                      key={user}
+                      className="hover:bg-slate-200"
+                      onMouseDown={() => handleClickSuggestion(user)}
+                    >
+                      {user}
+                    </p>
+                  );
+                }
+              })}
+            </div>
+          )}
         </div>
 
         <button
@@ -177,9 +182,24 @@ const GithubProfileFinder = () => {
   }
 
   function FillSuggestedUsersWithNamesOnly(users: GithubProfile[]) {
-    const newSuggestedUsers: string[] = [];
-    users.map((user) => newSuggestedUsers.push(user.login));
+    const newSuggestedUsers: string[] = users.map((user) => user.login);
     setSuggestedUsers(newSuggestedUsers);
+  }
+
+  function handleClickSuggestion(user: string) {
+    setInputContent(user);
+
+    setViewSuggestions(false);
+  }
+
+  function handleChangeInputContent(text: string) {
+    setInputContent(text);
+    setViewSuggestions(true);
+  }
+  function handleFocusInput() {
+    if (inputContent) {
+      setViewSuggestions(true);
+    }
   }
 };
 
