@@ -14,6 +14,7 @@ import Modal from "./components/Modal";
 import PlaceHolderPage from "./components/PlaceHolderPage"; // contains the modal
 import FramerMotion from "./components/FramerMotionTutorial/FramerMotion";
 import GithubProfileFinder from "./components/GithubProfileFinder";
+import TicTacToe from "./components/TicTacToe";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
       <ProgressIndicator />
       <Tabs />
       <PlaceHolderPage /> */}
-      <GithubProfileFinder />
+      {/* <GithubProfileFinder /> */}
+      <TicTacToe />
     </>
   );
 }
