@@ -4,6 +4,10 @@ const TicTacToe = () => {
   const [gameState, setGameState] = useState(Array(9).fill(""));
   const [currentPlayer, setCurrentPlayer] = useState("X");
   const [previousPlayer, setPreviousPlayer] = useState("O");
+  const [gameOver, setGameOver] = useState(false);
+  const [playerXwinCount, setplayerXwinCount] = useState(0);
+  const [playerOwinCount, setplayerOwinCount] = useState(0);
+  const [tieCount, setTieCount] = useState(0);
 
   useEffect(() => {
     /*
@@ -26,11 +30,23 @@ const TicTacToe = () => {
     ];
 
     if (WinConditions.some(checkWinCondition)) {
-      console.log(previousPlayer, "won");
+      setGameOver(true);
+      if (previousPlayer === "X") {
+        setplayerXwinCount((count) => count + 1);
+      } else {
+        setplayerOwinCount((count) => count + 1);
+      }
     }
   }, [gameState]);
+  useEffect(() => {
+    if (!gameOver) {
+      setGameState(Array(9).fill(""));
+    }
+  }, [gameOver]);
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold absolute top-30">Tic Tac Toe!</h1>
+
       <div className="w-96  h-96 grid grid-rows-3 grid-cols-3">
         {gameState.map((item, index) => {
           return (
@@ -44,6 +60,21 @@ const TicTacToe = () => {
           );
         })}
       </div>
+
+      <div className="scoreboard flex  w-full justify-center gap-8 mt-7">
+        <div className="score flex flex-col items-center">
+          <p className="font-bold">player X</p>
+          <p>{playerXwinCount}</p>
+        </div>
+        <div className="score flex flex-col items-center">
+          <p className="font-bold">player O</p>
+          <p>{playerOwinCount}</p>
+        </div>
+        <div className="score flex flex-col items-center">
+          <p className="font-bold">Tie</p>
+          <p>{tieCount}</p>
+        </div>
+      </div>
     </div>
   );
 
@@ -52,6 +83,9 @@ const TicTacToe = () => {
       // means this square is already used.
       // we don't want to change that
       return;
+    }
+    if (gameOver) {
+      setGameOver(false);
     }
     console.log(index);
     const newGameState = [...gameState];
