@@ -11,10 +11,7 @@ const TicTacToe = () => {
 
   useEffect(() => {
     /*
-      win conditions
- 
-      todo:
-      impletment check win conditions
+  
     */
     console.log("Checking win for:", previousPlayer);
 
@@ -37,10 +34,19 @@ const TicTacToe = () => {
         setplayerOwinCount((count) => count + 1);
       }
     }
+
+    // checking for tie
+    if (gameState.every(didAnyPlayerUseIt)) {
+      setGameOver(true);
+
+      setTieCount(tieCount + 1);
+    }
   }, [gameState]);
   useEffect(() => {
     if (!gameOver) {
       setGameState(Array(9).fill(""));
+      setCurrentPlayer("X");
+      setPreviousPlayer("O");
     }
   }, [gameOver]);
   return (
@@ -79,14 +85,16 @@ const TicTacToe = () => {
   );
 
   function handleClickSquare(index: number) {
+    if (gameOver) {
+      setGameOver(false);
+      return;
+    }
     if (gameState[index]) {
       // means this square is already used.
       // we don't want to change that
       return;
     }
-    if (gameOver) {
-      setGameOver(false);
-    }
+
     console.log(index);
     const newGameState = [...gameState];
     newGameState[index] = currentPlayer;
@@ -103,6 +111,10 @@ const TicTacToe = () => {
 
   function checkWinCondition(WinCondition: number[]) {
     return WinCondition.every(didCurrentPlayerUseIt);
+  }
+
+  function didAnyPlayerUseIt(squareNumber: number) {
+    return gameState[squareNumber] === "X" || gameState[squareNumber] === "O";
   }
 };
 
