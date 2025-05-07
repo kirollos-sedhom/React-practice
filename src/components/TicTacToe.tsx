@@ -10,39 +10,6 @@ const TicTacToe = () => {
   const [tieCount, setTieCount] = useState(0);
 
   useEffect(() => {
-    /*
-  
-    */
-    console.log("Checking win for:", previousPlayer);
-
-    const WinConditions = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    if (WinConditions.some(checkWinCondition)) {
-      setGameOver(true);
-      if (previousPlayer === "X") {
-        setplayerXwinCount((count) => count + 1);
-      } else {
-        setplayerOwinCount((count) => count + 1);
-      }
-    }
-
-    // checking for tie
-    if (gameState.every(didAnyPlayerUseIt)) {
-      setGameOver(true);
-
-      setTieCount(tieCount + 1);
-    }
-  }, [gameState]);
-  useEffect(() => {
     if (!gameOver) {
       setGameState(Array(9).fill(""));
       setCurrentPlayer("X");
@@ -85,36 +52,77 @@ const TicTacToe = () => {
   );
 
   function handleClickSquare(index: number) {
-    if (gameOver) {
-      setGameOver(false);
-      return;
-    }
+    // update board
     if (gameState[index]) {
       // means this square is already used.
       // we don't want to change that
       return;
     }
-
-    console.log(index);
     const newGameState = [...gameState];
     newGameState[index] = currentPlayer;
     setGameState(newGameState);
 
+    // check win
+    const someoneWon = checkWin(newGameState);
+
+    // check tie
+    const wasItTie = checkTie(someoneWon, newGameState);
+
+    // update turn
+    if (wasItTie || someoneWon) {
+      setGameOver(true);
+    }
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
-    setPreviousPlayer(previousPlayer === "X" ? "O" : "X");
   }
 
-  function didCurrentPlayerUseIt(squareNumber: number) {
-    // const playerWhoJustMoved = currentPlayer === "X" ? "O" : "X";
-    return gameState[squareNumber] === previousPlayer;
+  function checkWin(newGameState: string[]) {
+    const WinConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    if (
+      WinConditions.some((winCondition) =>
+        wasThisWinConditionAchieved(winCondition, newGameState)
+      )
+    ) {
+      if (currentPlayer === "X") {
+        setplayerXwinCount(playerXwinCount + 1);
+      } else {
+        setplayerOwinCount(playerOwinCount + 1);
+      }
+      return true;
+    } else {
+      console.log("still playing");
+      return false;
+    }
   }
 
-  function checkWinCondition(WinCondition: number[]) {
-    return WinCondition.every(didCurrentPlayerUseIt);
+  function checkTie(someoneWon: boolean, newGameState: string[]) {
+    if (!someoneWon && areAllSquaresUsed(newGameState)) {
+      setTieCount(tieCount + 1);
+      return true;
+    }
+
+    return false;
+  }
+  function wasThisWinConditionAchieved(
+    winCondition: number[],
+    newGameState: string[]
+  ) {
+    return winCondition.every(
+      (square) => newGameState[square] === currentPlayer
+    );
   }
 
-  function didAnyPlayerUseIt(squareNumber: number) {
-    return gameState[squareNumber] === "X" || gameState[squareNumber] === "O";
+  function areAllSquaresUsed(gameState: string[]) {
+    return gameState.every((square) => square !== "");
   }
 };
 
