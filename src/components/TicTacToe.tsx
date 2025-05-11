@@ -3,19 +3,18 @@ import React, { useEffect, useState } from "react";
 const TicTacToe = () => {
   const [gameState, setGameState] = useState(Array(9).fill(""));
   const [currentPlayer, setCurrentPlayer] = useState("X");
-  const [previousPlayer, setPreviousPlayer] = useState("O");
+
   const [gameOver, setGameOver] = useState(false);
   const [playerXwinCount, setplayerXwinCount] = useState(0);
   const [playerOwinCount, setplayerOwinCount] = useState(0);
   const [tieCount, setTieCount] = useState(0);
 
-  useEffect(() => {
-    if (!gameOver) {
-      setGameState(Array(9).fill(""));
-      setCurrentPlayer("X");
-      setPreviousPlayer("O");
-    }
-  }, [gameOver]);
+  // useEffect(() => {
+  //   if (gameOver) {
+  //     setGameState(Array(9).fill(""));
+  //     setCurrentPlayer("X");
+  //   }
+  // }, [gameOver]);
   return (
     <div className="h-screen flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold absolute top-30">Tic Tac Toe!</h1>
@@ -52,6 +51,11 @@ const TicTacToe = () => {
   );
 
   function handleClickSquare(index: number) {
+    if (gameOver) {
+      handleGameOver();
+      return;
+    }
+
     // update board
     if (gameState[index]) {
       // means this square is already used.
@@ -66,12 +70,10 @@ const TicTacToe = () => {
     const someoneWon = checkWin(newGameState);
 
     // check tie
-    const wasItTie = checkTie(someoneWon, newGameState);
+    checkTie(someoneWon, newGameState);
 
     // update turn
-    if (wasItTie || someoneWon) {
-      setGameOver(true);
-    }
+
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
   }
 
@@ -97,6 +99,7 @@ const TicTacToe = () => {
       } else {
         setplayerOwinCount(playerOwinCount + 1);
       }
+      setGameOver(true);
       return true;
     } else {
       console.log("still playing");
@@ -107,6 +110,7 @@ const TicTacToe = () => {
   function checkTie(someoneWon: boolean, newGameState: string[]) {
     if (!someoneWon && areAllSquaresUsed(newGameState)) {
       setTieCount(tieCount + 1);
+      setGameOver(true);
       return true;
     }
 
@@ -123,6 +127,12 @@ const TicTacToe = () => {
 
   function areAllSquaresUsed(gameState: string[]) {
     return gameState.every((square) => square !== "");
+  }
+
+  function handleGameOver() {
+    setGameOver(false);
+    setGameState(Array(9).fill(""));
+    setCurrentPlayer("X");
   }
 };
 
