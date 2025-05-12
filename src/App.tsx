@@ -15,14 +15,16 @@ import PlaceHolderPage from "./components/PlaceHolderPage"; // contains the moda
 import FramerMotion from "./components/FramerMotionTutorial/FramerMotion";
 import GithubProfileFinder from "./components/GithubProfileFinder";
 import TicTacToe from "./components/TicTacToe";
+import data from "./data/feature_flags.json";
 
 function App() {
+  console.log(data);
   return (
     <>
-      {/* <Accordion />
-      <ColorGenerator />
-      <StarRating />
-      <ImageSlider />
+      {data.Accordion && <Accordion />}
+      {data.ColorGenerator && <ColorGenerator />}
+      {data.StarRating && <StarRating />}
+      {/* <ImageSlider />
       <Products />
       <TreeView />
       <QRGenerator />
@@ -31,7 +33,7 @@ function App() {
       <Tabs />
       <PlaceHolderPage /> */}
       {/* <GithubProfileFinder /> */}
-      <TicTacToe />
+      {/* <TicTacToe /> */}
     </>
   );
 }
