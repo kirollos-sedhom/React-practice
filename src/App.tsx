@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Accordion from "./components/Accordion";
 import ColorGenerator from "./components/ColorGenerator";
 import ImageSlider from "./components/ImageSlider";
@@ -15,15 +15,17 @@ import PlaceHolderPage from "./components/PlaceHolderPage"; // contains the moda
 import FramerMotion from "./components/FramerMotionTutorial/FramerMotion";
 import GithubProfileFinder from "./components/GithubProfileFinder";
 import TicTacToe from "./components/TicTacToe";
-import data from "./data/feature_flags.json";
-
+import useFetch from "./hooks/useFetch";
+import { FlagsContext } from "./context/FeatureFlags";
 function App() {
-  console.log(data);
+  const context = useContext(FlagsContext);
+  const data = useFetch("https://jsonplaceholder.typicode.com/todos/1");
+
   return (
     <>
-      {data.Accordion && <Accordion />}
-      {data.ColorGenerator && <ColorGenerator />}
-      {data.StarRating && <StarRating />}
+      {/* {context?.Accordion && <Accordion />}
+      {context?.ColorGenerator && <ColorGenerator />}
+      {context?.StarRating && <StarRating />} */}
       {/* <ImageSlider />
       <Products />
       <TreeView />
