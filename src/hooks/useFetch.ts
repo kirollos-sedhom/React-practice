@@ -1,16 +1,34 @@
 import React, { useEffect, useState } from "react";
 
-export default function useFetch(url: string) {
+export default function useFetch(
+  url: string,
+  resource?: string,
+  query?: Record<string, string>
+) {
   const [data, setData] = useState(null);
   useEffect(() => {
-    getData(url).then((json) => setData(json));
+    getData(url, resource, query).then((json) => setData(json));
   }, [url]);
 
   return data;
 }
-async function getData(url: string) {
+async function getData(
+  url: string,
+  resource?: string,
+  query?: Record<string, string>
+) {
+  let completeURL = url;
+  if (resource) {
+    completeURL = `${completeURL}/${resource}`;
+  }
+
+  if (query) {
+    const params = new URLSearchParams(query);
+    const queryString = params.toString();
+    completeURL = `${completeURL}?${queryString}`;
+  }
   try {
-    const response = await fetch(url);
+    const response = await fetch(completeURL);
     if (!response.ok) {
       throw new Error(`response status: ${response.status}`);
     }

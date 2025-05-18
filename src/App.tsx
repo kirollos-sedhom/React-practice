@@ -19,8 +19,10 @@ import useFetch from "./hooks/useFetch";
 import { FlagsContext } from "./context/FeatureFlags";
 function App() {
   const context = useContext(FlagsContext);
-  const data = useFetch("https://jsonplaceholder.typicode.com/todos/1");
-
+  const data = useFetch("https://jsonplaceholder.typicode.com", "todos", {
+    limit: "5",
+  });
+  // console.log(data);
   return (
     <>
       {/* {context?.Accordion && <Accordion />}
