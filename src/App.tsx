@@ -17,12 +17,13 @@ import GithubProfileFinder from "./components/GithubProfileFinder";
 import TicTacToe from "./components/TicTacToe";
 import useFetch from "./hooks/useFetch";
 import { FlagsContext } from "./context/FeatureFlags";
+import ModalWithHook from "./components/ModalWithHook";
 function App() {
   const context = useContext(FlagsContext);
-  const { data, isLoading, error } = useFetch(
-    "https://jsonplaceholder.typicode.com/posts/1"
-  );
-  console.log(data, isLoading, error);
+  // const { data, isLoading, error } = useFetch(
+  //   "https://jsonplaceholder.typicode.com/posts/1"
+  // );
+
   return (
     <>
       {/* {context?.Accordion && <Accordion />}
@@ -38,6 +39,7 @@ function App() {
       <PlaceHolderPage /> */}
       {/* <GithubProfileFinder /> */}
       {/* <TicTacToe /> */}
+      <ModalWithHook />
     </>
   );
 }
