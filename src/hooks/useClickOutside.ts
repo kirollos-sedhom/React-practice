@@ -15,7 +15,13 @@ type hookType = {
 export default function useClickOutside({ ref, actionToBeDone }: hookType) {
   useEffect(() => {
     function handleClick(e: Event) {
-      console.log("clicking on ", e.target);
+      console.log("the click is working");
+      if (ref.current && ref.current.contains(e.target as Node)) {
+        console.log("clicking on element");
+      } else {
+        console.log("clicking outside element");
+        actionToBeDone();
+      }
     }
     document.addEventListener("click", handleClick);
 
