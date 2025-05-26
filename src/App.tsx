@@ -18,6 +18,7 @@ import TicTacToe from "./components/TicTacToe";
 import useFetch from "./hooks/useFetch";
 import { FlagsContext } from "./context/FeatureFlags";
 import ModalWithHook from "./components/ModalWithHook";
+import HooksTester from "./components/HooksTester";
 function App() {
   const context = useContext(FlagsContext);
   // const { data, isLoading, error } = useFetch(
@@ -39,7 +40,8 @@ function App() {
       <PlaceHolderPage /> */}
       {/* <GithubProfileFinder /> */}
       {/* <TicTacToe /> */}
-      <ModalWithHook />
+      {/* <ModalWithHook /> */}
+      <HooksTester />
     </>
   );
 }
