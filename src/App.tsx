@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Accordion from "./components/Accordion";
 import ColorGenerator from "./components/ColorGenerator";
 import ImageSlider from "./components/ImageSlider";
@@ -19,29 +19,36 @@ import useFetch from "./hooks/useFetch";
 import { FlagsContext } from "./context/FeatureFlags";
 import ModalWithHook from "./components/ModalWithHook";
 import HooksTester from "./components/HooksTester";
+import ScrollTop from "./components/ScrollTop";
+import ScrollBottom from "./components/ScrollBottom";
+import ScrollToElement from "./components/ScrollToElement";
+import WeatherApp from "./components/WeatherApp";
 function App() {
   const context = useContext(FlagsContext);
-  // const { data, isLoading, error } = useFetch(
-  //   "https://jsonplaceholder.typicode.com/posts/1"
-  // );
-
+  const transitionRef = useRef(null);
   return (
     <>
-      {/* {context?.Accordion && <Accordion />}
+      {/* <ScrollBottom />
+      <ScrollToElement elementRef={transitionRef} />
+
+      {context?.Accordion && <Accordion />}
       {context?.ColorGenerator && <ColorGenerator />}
-      {context?.StarRating && <StarRating />} */}
-      {/* <ImageSlider />
+      {context?.StarRating && <StarRating />}
+      <ImageSlider />
       <Products />
       <TreeView />
       <QRGenerator />
       <DarkMode />
       <ProgressIndicator />
       <Tabs />
-      <PlaceHolderPage /> */}
-      {/* <GithubProfileFinder /> */}
-      {/* <TicTacToe /> */}
-      {/* <ModalWithHook /> */}
+      <PlaceHolderPage />
+      <GithubProfileFinder elementRef={transitionRef} />
+
+      <ModalWithHook />
       <HooksTester />
+      <TicTacToe />
+      <ScrollTop /> */}
+      <WeatherApp />
     </>
   );
 }

@@ -9,15 +9,9 @@ const TicTacToe = () => {
   const [playerOwinCount, setplayerOwinCount] = useState(0);
   const [tieCount, setTieCount] = useState(0);
 
-  // useEffect(() => {
-  //   if (gameOver) {
-  //     setGameState(Array(9).fill(""));
-  //     setCurrentPlayer("X");
-  //   }
-  // }, [gameOver]);
   return (
     <div className="h-screen flex flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold absolute top-30">Tic Tac Toe!</h1>
+      <p className="text-3xl font-bold mb-8">Tic Tac Toe!</p>
 
       <div className="w-96  h-96 grid grid-rows-3 grid-cols-3">
         {gameState.map((item, index) => {

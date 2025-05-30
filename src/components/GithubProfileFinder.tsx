@@ -24,7 +24,11 @@ get name , profile link , join date, public repos, followers, following
 
 */
 
-const GithubProfileFinder = () => {
+const GithubProfileFinder = ({
+  elementRef,
+}: {
+  elementRef: React.MutableRefObject<null>;
+}) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputContent, setInputContent] = useState<string>("");
   const [data, setData] = useState<GithubProfile | null>(null);
@@ -57,7 +61,7 @@ const GithubProfileFinder = () => {
     return () => clearTimeout(delay);
   }, [inputContent]);
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" ref={elementRef}>
       <div className="search_menu flex gap-4 mt-4">
         <div className="search_and_suggestion">
           <input
