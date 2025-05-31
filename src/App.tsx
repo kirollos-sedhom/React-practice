@@ -23,6 +23,8 @@ import ScrollTop from "./components/ScrollTop";
 import ScrollBottom from "./components/ScrollBottom";
 import ScrollToElement from "./components/ScrollToElement";
 import WeatherApp from "./components/WeatherApp";
+import RecipeApp from "./components/RecipeApp/RecipeApp";
+import { BrowserRouter } from "react-router-dom";
 function App() {
   const context = useContext(FlagsContext);
   const transitionRef = useRef(null);
@@ -48,7 +50,9 @@ function App() {
       <HooksTester />
       <TicTacToe />
       <ScrollTop /> */}
-      <WeatherApp />
+      {/* <WeatherApp /> */}
+
+      <RecipeApp />
     </>
   );
 }
