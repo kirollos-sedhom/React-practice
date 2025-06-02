@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { BiSolidSearchAlt2 } from "react-icons/bi";
+import { RecipeContext } from "./RecipeApp";
 
 export default function RecipeNavBar() {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const { setRecipeData } = useContext(RecipeContext);
 
   async function getData(query: string) {
     const APIkey = import.meta.env.VITE_RECIPE_KEY;
@@ -20,7 +22,7 @@ export default function RecipeNavBar() {
       }
       const json = await response.json();
       console.log(json);
-      setData(json);
+      setRecipeData(json);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

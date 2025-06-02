@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RecipeHome from "./RecipeHome";
 import RecipeFav from "./RecipeFav";
@@ -32,15 +32,27 @@ ingredients
 clicking the "favorites" button from the navbar:
 allows you to see all your favorite recipes
 */
+type RecipeContextType = {
+  recipeData: any[];
+  setRecipeData: React.Dispatch<React.SetStateAction<never[]>>;
+};
+export const RecipeContext = createContext<RecipeContextType>({
+  recipeData: [],
+  setRecipeData: () => {},
+});
+
 export default function RecipeApp() {
+  const [recipeData, setRecipeData] = useState([]);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<RecipeHome />} />
-          <Route path="/favorites" element={<RecipeFav />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <RecipeContext.Provider value={{ recipeData, setRecipeData }}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<RecipeHome />} />
+            <Route path="/favorites" element={<RecipeFav />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </RecipeContext.Provider>
   );
 }
