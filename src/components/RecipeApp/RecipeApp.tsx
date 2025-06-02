@@ -33,8 +33,15 @@ clicking the "favorites" button from the navbar:
 allows you to see all your favorite recipes
 */
 type RecipeContextType = {
-  recipeData: any[];
+  recipeData: Recipe[];
   setRecipeData: React.Dispatch<React.SetStateAction<never[]>>;
+};
+
+type Recipe = {
+  id: number;
+  title: string;
+  image: string;
+  likes: number;
 };
 export const RecipeContext = createContext<RecipeContextType>({
   recipeData: [],

@@ -12,7 +12,8 @@ export default function RecipeNavBar() {
 
   async function getData(query: string) {
     const APIkey = import.meta.env.VITE_RECIPE_KEY;
-    const URL = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&limit=2&apiKey=${APIkey}`;
+    const limit = 10;
+    const URL = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${limit}&apiKey=${APIkey}`;
     try {
       setIsLoading(true);
       setError("");
@@ -22,7 +23,7 @@ export default function RecipeNavBar() {
       }
       const json = await response.json();
       console.log(json);
-      setRecipeData(json);
+      setRecipeData(json.results);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
