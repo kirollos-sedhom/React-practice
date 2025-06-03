@@ -27,7 +27,7 @@ export default function RecipeItem(props: Recipe) {
         <p className="font-bold text-slate-900 truncate">{props.title}</p>
         <span className="flex items-center gap-1">
           <IoIosTimer />
-          <p>{props.readyInMinutes}</p>
+          <p>{props.readyInMinutes} mins</p>
         </span>
       </div>
     </div>
@@ -43,11 +43,13 @@ export default function RecipeItem(props: Recipe) {
     const newFavorites = [...favoriteRecipes];
     newFavorites.push(recipe);
     setFavoriteRecipes(newFavorites);
+    localStorage.setItem("favoriteRecipes", JSON.stringify(newFavorites));
   }
 
   function removeFromFavorites(recipe: Recipe) {
     const newFavorites = favoriteRecipes.filter((item) => item.id != recipe.id);
     setFavoriteRecipes(newFavorites);
+    localStorage.setItem("favoriteRecipes", JSON.stringify(newFavorites));
   }
 
   function isInFavorites(recipe: Recipe) {

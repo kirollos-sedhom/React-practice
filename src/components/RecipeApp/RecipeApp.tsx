@@ -5,21 +5,11 @@ import RecipeFav from "./RecipeFav";
 import Layout from "./Layout";
 /*
 todo
-homepage with navbar at the top that contains:
-LOGO========SEARCHBAR=====HOME|FAVORITES
-empty space waiting for you to search
-.
-when searching for a recipe, instead of the empty space 
-you should see many [CARD] components that represent suggestions of recipes
+extend the width of the text input to fill the search box
 
-RECIPE CARD:
-simple component that contains:
-===
-recipe image
-source
-name
-button for recipe details
-===
+update the shape of the heart to be visible
+
+on searching > navigate to the home to show search results
 
 on clicking the details button, navigate to /recipeID
 its a page that will contain the recipe image

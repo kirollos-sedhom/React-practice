@@ -1,12 +1,19 @@
 import React, { useContext } from "react";
 import { RecipeContext } from "./RecipeApp";
 import RecipeItem from "./RecipeItem";
+import { Recipe } from "./RecipeApp";
 export default function RecipeFav() {
+  const storageFavoriteRecipes = localStorage.getItem("favoriteRecipes");
+  console.log("found in storage:", storageFavoriteRecipes);
   const { favoriteRecipes } = useContext(RecipeContext);
+
+  const updatedFavoriteRecipes: Recipe[] = storageFavoriteRecipes
+    ? JSON.parse(storageFavoriteRecipes)
+    : favoriteRecipes;
   return (
     <div className="flex-1 flex pt-8 justify-center gap-4 flex-wrap">
-      {favoriteRecipes.length ? (
-        favoriteRecipes.map((item) => {
+      {updatedFavoriteRecipes.length ? (
+        updatedFavoriteRecipes.map((item) => {
           return (
             <RecipeItem
               id={item.id}
