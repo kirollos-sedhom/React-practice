@@ -13,7 +13,7 @@ export default function RecipeNavBar() {
   async function getData(query: string) {
     const APIkey = import.meta.env.VITE_RECIPE_KEY;
     const limit = 10;
-    const URL = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${limit}&apiKey=${APIkey}`;
+    const URL = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${limit}&addRecipeInformation=true&apiKey=${APIkey}`;
     try {
       setIsLoading(true);
       setError("");
@@ -23,7 +23,7 @@ export default function RecipeNavBar() {
       }
       const json = await response.json();
       console.log(json);
-      setRecipeData(json.results);
+      setRecipeData(json.results); //working
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -45,7 +45,7 @@ export default function RecipeNavBar() {
   // LOGO========SEARCHBAR=====HOME|FAVORITES
   return (
     <div className="flex items-center justify-between shadow-sm">
-      <img src="/recipes/logo2.png" alt="app logo" className="w-20" />
+      <img src="/recipes/logo5.png" alt="app logo" className="w-15 p-2" />
       <div className="search flex items-center border-1 border-amber-400/50  focus-within:border-amber-500 md:w-94 h-8 px-2 py-1 rounded-md ">
         <input
           type="text"

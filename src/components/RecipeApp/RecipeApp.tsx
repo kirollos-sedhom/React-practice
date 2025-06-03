@@ -34,24 +34,33 @@ allows you to see all your favorite recipes
 */
 type RecipeContextType = {
   recipeData: Recipe[];
-  setRecipeData: React.Dispatch<React.SetStateAction<never[]>>;
+  favoriteRecipes: Recipe[];
+  setRecipeData: React.Dispatch<React.SetStateAction<Recipe[]>>;
+  setFavoriteRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 };
 
-type Recipe = {
+export type Recipe = {
   id: number;
   title: string;
   image: string;
-  likes: number;
+  readyInMinutes: number;
+  servings: number;
+  sourceName: string;
 };
 export const RecipeContext = createContext<RecipeContextType>({
   recipeData: [],
+  favoriteRecipes: [],
   setRecipeData: () => {},
+  setFavoriteRecipes: () => {},
 });
 
 export default function RecipeApp() {
-  const [recipeData, setRecipeData] = useState([]);
+  const [recipeData, setRecipeData] = useState<Recipe[]>([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
   return (
-    <RecipeContext.Provider value={{ recipeData, setRecipeData }}>
+    <RecipeContext.Provider
+      value={{ recipeData, favoriteRecipes, setRecipeData, setFavoriteRecipes }}
+    >
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
