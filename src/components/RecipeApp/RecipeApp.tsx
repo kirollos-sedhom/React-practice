@@ -3,15 +3,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RecipeHome from "./RecipeHome";
 import RecipeFav from "./RecipeFav";
 import Layout from "./Layout";
+import RecipeDetails from "./RecipeDetails";
 /*
-todo
-extend the width of the text input to fill the search box
 
-update the shape of the heart to be visible
+todo update the shape of the heart to be visible
 
-on searching > navigate to the home to show search results
+todo clicking the heart doesn't do favorite, it navigates to the recipe details
 
-on clicking the details button, navigate to /recipeID
+
+todo on clicking the details button, navigate to /recipeID
 its a page that will contain the recipe image
 its source
 name
@@ -19,8 +19,7 @@ add to favouites button
 ingredients
 
 
-clicking the "favorites" button from the navbar:
-allows you to see all your favorite recipes
+
 */
 type RecipeContextType = {
   recipeData: Recipe[];
@@ -56,6 +55,7 @@ export default function RecipeApp() {
           <Route element={<Layout />}>
             <Route path="/" element={<RecipeHome />} />
             <Route path="/favorites" element={<RecipeFav />} />
+            <Route path="/recipes/:id" element={<RecipeDetails />} />
           </Route>
         </Routes>
       </BrowserRouter>

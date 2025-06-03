@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, replace, useNavigate } from "react-router-dom";
 import { BiSolidSearchAlt2 } from "react-icons/bi";
 import { RecipeContext } from "./RecipeApp";
 
@@ -10,6 +10,7 @@ export default function RecipeNavBar() {
   const [searchValue, setSearchValue] = useState("");
   const { setRecipeData } = useContext(RecipeContext);
 
+  const navigate = useNavigate();
   async function getData(query: string) {
     const APIkey = import.meta.env.VITE_RECIPE_KEY;
     const limit = 10;
@@ -37,6 +38,7 @@ export default function RecipeNavBar() {
       console.log("searching...");
       getData(searchValue);
       setSearchValue("");
+      navigate("/", { replace: true });
     } else {
       return;
     }
@@ -49,7 +51,7 @@ export default function RecipeNavBar() {
       <div className="search flex items-center border-1 border-amber-400/50  focus-within:border-amber-500 md:w-94 h-8 px-2 py-1 rounded-md ">
         <input
           type="text"
-          className="outline-none"
+          className="outline-none w-full"
           placeholder="let's cook!"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
