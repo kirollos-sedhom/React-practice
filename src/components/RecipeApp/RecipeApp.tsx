@@ -11,7 +11,7 @@ todo update the shape of the heart to be visible
 todo clicking the heart doesn't do favorite, it navigates to the recipe details
 
 
-todo on clicking the details button, navigate to /recipeID
+todo adjust the style of recipe details page
 its a page that will contain the recipe image
 its source
 name
