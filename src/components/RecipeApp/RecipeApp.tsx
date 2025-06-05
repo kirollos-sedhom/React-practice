@@ -8,8 +8,6 @@ import RecipeDetails from "./RecipeDetails";
 
 todo update the shape of the heart to be visible
 
-todo clicking the heart doesn't do favorite, it navigates to the recipe details
-
 
 todo adjust the style of recipe details page
 its a page that will contain the recipe image
