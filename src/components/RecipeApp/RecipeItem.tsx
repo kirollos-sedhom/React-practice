@@ -15,7 +15,7 @@ export default function RecipeItem(props: Recipe) {
     : "text-xl absolute top-5 right-5 active:scale-150 transition-transform duration-500";
   return (
     <div className="border-1 border-slate-300 rounded-xl h-64 w-64 flex flex-col overflow-hidden relative select-none">
-      <Link to={`/recipes/${props.id}`}>
+      <Link to={`/recipe-app/${props.id}`}>
         <img src={props.image} alt={props.title} className="w-full h-full" />
 
         <div className="absolute bottom-0 bg-slate-300/60 w-full p-2">

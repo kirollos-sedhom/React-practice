@@ -38,7 +38,7 @@ export default function RecipeNavBar() {
       console.log("searching...");
       getData(searchValue);
       setSearchValue("");
-      navigate("/", { replace: true });
+      navigate("/recipe-app", { replace: true });
     } else {
       return;
     }
@@ -64,7 +64,7 @@ export default function RecipeNavBar() {
       </div>
       <div className="navigation flex gap-2 mr-4">
         <NavLink
-          to={"/"}
+          to={"/recipe-app"}
           className={({ isActive }) =>
             isActive ? "text-amber-600 font-bold" : ""
           }
@@ -72,7 +72,7 @@ export default function RecipeNavBar() {
           Home
         </NavLink>
         <NavLink
-          to={"/favorites"}
+          to={"/recipe-app/favorites"}
           className={({ isActive }) =>
             isActive ? "text-amber-600 font-bold" : ""
           }

@@ -51,9 +51,9 @@ export default function RecipeApp() {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<RecipeHome />} />
-            <Route path="/favorites" element={<RecipeFav />} />
-            <Route path="/recipes/:id" element={<RecipeDetails />} />
+            <Route path="/recipe-app" element={<RecipeHome />} />
+            <Route path="/recipe-app/favorites" element={<RecipeFav />} />
+            <Route path="/recipe-app/:id" element={<RecipeDetails />} />
           </Route>
         </Routes>
       </BrowserRouter>
